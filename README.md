@@ -107,6 +107,7 @@ See [docs/USAGE.md](docs/USAGE.md) for the step-by-step flow and [docs/TROUBLESH
 ## Credits & disclaimer
 
 - Built on top of [`Mortimer452/Lymow-One-MQTT`](https://github.com/Mortimer452/Lymow-One-MQTT) — all the hard protocol work lives there.
+- File organisation, YAML scaffolding, docs, and debug tooling assisted by [Claude](https://claude.ai) (Anthropic).
 - This repo only contains Home Assistant YAML/automation glue and a debug helper. It is not affiliated with or endorsed by Lymow.
 - Sending mow commands moves a real machine with spinning blades. Use sensible safety practices and don't rely on fire-and-forget commands for anything safety-critical.
 
