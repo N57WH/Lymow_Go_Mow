@@ -1,16 +1,25 @@
-# Add these blocks to your configuration.yaml.
-# If you already have input_select: or input_text: sections, merge the entries
-# under the existing top-level keys (do not duplicate the keys).
+# helpers.yaml  —  the dropdown picker + the queue text store.
+# Add these blocks to configuration.yaml (or create the equivalents in the UI:
+# Settings > Devices & services > Helpers > + Create Helper).
 
 input_select:
   lymow_zone:
     name: Lymow zone
+    icon: mdi:grass
     options:
-      - Apple Tree       # replace with your zone names from the Lymow app
-    icon: mdi:map-marker-radius
+      # >>> EDIT to your real zone names, exactly as in the Lymow app.
+      # >>> Use the bare name ("Apple Tree"), NOT the "Zone Apple Tree" label
+      # >>> that Home Assistant shows in the entity list.
+      - Apple Tree
+      - Drive North
+      - Driveway
+      - East
+      - North
+      - North East
+      - Temp
 
 input_text:
   lymow_queue:
     name: Lymow queue
+    icon: mdi:format-list-numbered
     max: 255
-    icon: mdi:format-list-ordered

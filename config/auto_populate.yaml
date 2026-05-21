@@ -1,0 +1,42 @@
+# auto_populate.yaml  —  OPTIONAL.
+# Keeps input_select.lymow_zone's options in sync with the mower's zones, so
+# you never hand-edit the dropdown. Add under `automation:` (or include it).
+#
+# HOW IT WORKS: every zone the mower knows about has a sensor whose entity_id
+# contains "_zone_" and a `hash_id` attribute, with a friendly name like
+# "Lymow <id> Zone <Zone Name>". This strips that prefix to recover the clean
+# zone name and writes the sorted, de-duplicated list into the dropdown.
+#
+# VERIFY the prefix against YOUR entities first (Developer Tools > States).
+# If your friendly names differ, adjust the regex_replace pattern below.
+
+- alias: Lymow — sync zone dropdown options
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: event
+      event_type: state_changed
+  condition:
+    - condition: template
+      value_template: >
+        {{ trigger.platform == 'homeassistant'
+           or (trigger.event.data.entity_id is defined
+               and '_zone_' in trigger.event.data.entity_id
+               and trigger.event.data.entity_id.startswith('sensor.')) }}
+  action:
+    - variables:
+        zone_names: >
+          {{ states.sensor
+             | selectattr('entity_id', 'search', '_zone_')
+             | rejectattr('attributes.hash_id', 'undefined')
+             | map(attribute='name')
+             | map('regex_replace', '^Lymow \w+ Zone ', '')
+             | list | unique | sort }}
+    - condition: template
+      value_template: "{{ zone_names | length > 0 }}"
+    - action: input_select.set_options
+      target:
+        entity_id: input_select.lymow_zone
+      data:
+        options: "{{ zone_names }}"
+  mode: single
