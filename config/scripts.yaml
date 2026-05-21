@@ -1,0 +1,48 @@
+# Paste these three script blocks into your scripts.yaml.
+# The file has no top-level "script:" key — that matches the expected format
+# when configuration.yaml uses "script: !include scripts.yaml".
+# If you define scripts inline in configuration.yaml, nest these under "script:".
+
+lymow_queue_add:
+  alias: "Lymow: Add zone to queue"
+  icon: mdi:plus-circle-outline
+  sequence:
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.lymow_queue
+      data:
+        value: >-
+          {%- set current = states('input_text.lymow_queue') | trim -%}
+          {%- set zone    = states('input_select.lymow_zone') -%}
+          {%- if current == '' -%}
+            {{ zone }}
+          {%- else -%}
+            {{ current }}, {{ zone }}
+          {%- endif -%}
+
+lymow_queue_mow:
+  alias: "Lymow: Mow queue"
+  icon: mdi:robot-mower
+  sequence:
+    - action: lymow_mqtt.start_zones
+      target:
+        device_id: <YOUR_MOWER_DEVICE_ID>   # <-- paste your 32-char hex string here
+      data:
+        zones: >-
+          {{ states('input_text.lymow_queue').split(',')
+             | map('trim') | reject('eq', '') | list }}
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.lymow_queue
+      data:
+        value: ""
+
+lymow_queue_clear:
+  alias: "Lymow: Clear queue"
+  icon: mdi:delete-outline
+  sequence:
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.lymow_queue
+      data:
+        value: ""

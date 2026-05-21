@@ -1,0 +1,16 @@
+# Add these blocks to your configuration.yaml.
+# If you already have input_select: or input_text: sections, merge the entries
+# under the existing top-level keys (do not duplicate the keys).
+
+input_select:
+  lymow_zone:
+    name: Lymow zone
+    options:
+      - Apple Tree       # replace with your zone names from the Lymow app
+    icon: mdi:map-marker-radius
+
+input_text:
+  lymow_queue:
+    name: Lymow queue
+    max: 255
+    icon: mdi:format-list-ordered
