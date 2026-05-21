@@ -1,0 +1,66 @@
+# scripts.yaml  —  use via `script: !include scripts.yaml` in configuration.yaml
+# (No top-level `script:` key here — the !include provides it. If you instead
+#  define scripts inline in configuration.yaml, nest these under `script:`.)
+#
+# After saving: Developer Tools > YAML > Check Configuration, then Reload Scripts.
+
+# ── Append the currently-picked zone to the end of the queue ────────────────
+lymow_queue_add:
+  alias: Lymow — add selected zone to queue
+  icon: mdi:playlist-plus
+  sequence:
+    - variables:
+        cur: "{{ states('input_text.lymow_queue') }}"
+        pick: "{{ states('input_select.lymow_zone') }}"
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.lymow_queue
+      data:
+        value: >
+          {% if cur in ['', 'unknown', 'unavailable'] %}
+          {{ pick }}
+          {% else %}
+          {{ cur }}, {{ pick }}
+          {% endif %}
+  mode: single
+
+# ── Send the whole queue to the mower, in order, then clear it ──────────────
+lymow_queue_mow:
+  alias: Lymow — mow the queue
+  icon: mdi:play
+  sequence:
+    - variables:
+        zones: >
+          {{ states('input_text.lymow_queue').split(',')
+             | map('trim')
+             | reject('in', ['', 'unknown', 'unavailable'])
+             | list }}
+    - condition: template
+      value_template: "{{ zones | length > 0 }}"
+    - action: lymow_mqtt.start_zones
+      target:
+        # This action requires the hex DEVICE ID (not an entity_id).
+        # Replace with your own from Settings > Devices > (mower) URL.
+        device_id: ed2c169f6b822c3f9ee6e13efd2fb8c6
+      data:
+        zones: "{{ zones }}"
+    # Clear the queue after sending so the next session starts fresh.
+    # Comment out the next step if you'd rather keep the queue to re-run it.
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.lymow_queue
+      data:
+        value: ""
+  mode: single
+
+# ── Empty the queue without mowing ──────────────────────────────────────────
+lymow_queue_clear:
+  alias: Lymow — clear the queue
+  icon: mdi:playlist-remove
+  sequence:
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.lymow_queue
+      data:
+        value: ""
+  mode: single

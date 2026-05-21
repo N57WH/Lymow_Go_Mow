@@ -1,0 +1,36 @@
+# zone_queue_card.yaml
+# Edit a dashboard > "+ Add Card" > "Manual", and paste this block.
+# Assumes the two helpers and three scripts already exist.
+
+type: entities
+title: Mow zones in order
+show_header_toggle: false
+entities:
+  - entity: input_select.lymow_zone
+    name: Pick a zone
+  - type: button
+    name: Add selected zone to queue
+    icon: mdi:playlist-plus
+    action_name: ADD
+    tap_action:
+      action: perform-action
+      perform_action: script.lymow_queue_add
+  - entity: input_text.lymow_queue
+    name: "Queue (mow order)"
+  - type: button
+    name: Mow these zones in order
+    icon: mdi:robot-mower
+    action_name: MOW
+    tap_action:
+      action: perform-action
+      perform_action: script.lymow_queue_mow
+  - type: button
+    name: Clear the queue
+    icon: mdi:playlist-remove
+    action_name: CLEAR
+    tap_action:
+      action: perform-action
+      perform_action: script.lymow_queue_clear
+
+# Note: perform-action / perform_action is current HA naming. On older builds,
+# swap those two keys for call-service / service.

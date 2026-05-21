@@ -1,0 +1,53 @@
+<svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, sans-serif">
+  <style>
+    .box { fill: #1f2937; stroke: #4b5563; stroke-width: 1.5; rx: 8; }
+    .accent { fill: #16a34a; stroke: #15803d; }
+    .label { fill: #e5e7eb; font-size: 13px; }
+    .lbl-dark { fill: #f0fdf4; font-size: 13px; font-weight: 600; }
+    .sub { fill: #9ca3af; font-size: 11px; }
+    .arrow { stroke: #6b7280; stroke-width: 1.5; fill: none; marker-end: url(#a); }
+    .atxt { fill: #9ca3af; font-size: 10px; }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#6b7280"/>
+    </marker>
+  </defs>
+
+  <!-- dropdown -->
+  <rect class="box" x="10" y="70" width="150" height="56" rx="8"/>
+  <text class="label" x="85" y="94" text-anchor="middle">Zone dropdown</text>
+  <text class="sub" x="85" y="112" text-anchor="middle">input_select</text>
+
+  <!-- ADD -->
+  <rect class="box accent" x="210" y="78" width="70" height="40" rx="8"/>
+  <text class="lbl-dark" x="245" y="103" text-anchor="middle">ADD</text>
+
+  <!-- queue -->
+  <rect class="box" x="330" y="70" width="150" height="56" rx="8"/>
+  <text class="label" x="405" y="94" text-anchor="middle">Ordered queue</text>
+  <text class="sub" x="405" y="112" text-anchor="middle">input_text</text>
+
+  <!-- MOW -->
+  <rect class="box accent" x="530" y="78" width="70" height="40" rx="8"/>
+  <text class="lbl-dark" x="565" y="103" text-anchor="middle">MOW</text>
+
+  <!-- action -->
+  <rect class="box" x="640" y="62" width="110" height="72" rx="8"/>
+  <text class="label" x="695" y="90" text-anchor="middle">start_zones</text>
+  <text class="sub" x="695" y="108" text-anchor="middle">device_id +</text>
+  <text class="sub" x="695" y="122" text-anchor="middle">ordered zones</text>
+
+  <!-- arrows -->
+  <path class="arrow" d="M160,98 L208,98"/>
+  <text class="atxt" x="184" y="90" text-anchor="middle">pick</text>
+  <path class="arrow" d="M280,98 L328,98"/>
+  <text class="atxt" x="304" y="90" text-anchor="middle">append</text>
+  <path class="arrow" d="M480,98 L528,98"/>
+  <path class="arrow" d="M600,98 L638,98"/>
+  <text class="atxt" x="619" y="90" text-anchor="middle">send</text>
+
+  <!-- clear loop -->
+  <path class="arrow" d="M565,118 C565,170 405,170 405,128"/>
+  <text class="atxt" x="485" y="165" text-anchor="middle">clear after send</text>
+</svg>
