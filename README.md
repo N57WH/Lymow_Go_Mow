@@ -5,6 +5,7 @@ A small set of Home Assistant building blocks that add a **"pick zones and mow t
 It sits on top of the [`Lymow-One-MQTT`](https://github.com/Mortimer452/Lymow-One-MQTT) custom integration by [@Mortimer452](https://github.com/Mortimer452), which exposes the `lymow_mqtt.start_zones` action. That action is powerful does almost every. This repo turns it into a UI: a dropdown to pick a zone, an **Add** button to build an ordered queue, and a **Mow** button to send the whole queue to the mower in order.
 
 > **Status:** working against `Lymow-One-MQTT` v0.4.0. Tested on a Lymow One+
+<img width="329" height="286" alt="Screenshot 2026-05-21 at 8 59 45 PM" src="https://github.com/user-attachments/assets/a58434f6-85a6-4512-a607-9e26a23be96b" />
 
 ---
 
